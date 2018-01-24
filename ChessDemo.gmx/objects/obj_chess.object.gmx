@@ -488,7 +488,7 @@ if (mouse_check_button_pressed(mb_left)){
         board_set_cell(future_board, sel_x, sel_y, -1, type.empty);
         board_set_cell(future_board, cell_x, cell_y, turn, sel_type);
         
-        //check all pieces for 
+        //check all pieces on opponent's team
         turn = !turn;
         for(var _h=0; _h&lt;board_h; _h++){
             for(var _w=0; _w&lt;board_w; _w++){
@@ -510,12 +510,12 @@ if (mouse_check_button_pressed(mb_left)){
         turn = !turn;
         
         ds_grid_destroy(future_board);
-        //cancel move
+        //cancel move if check or if clicked on the same cell
         if ((cell_x==sel_x &amp;&amp; cell_y==sel_y) || check[turn]){
             mode--;
             audio_play_sound(snd_cancel, 8, false);
             
-            //check show
+            //show check if checked
             if (check[turn]){
                 check_show = true;
                 alarm[0] = 30;
