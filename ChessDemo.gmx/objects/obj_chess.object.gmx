@@ -329,15 +329,19 @@ if (mode==2 &amp;&amp; animated){
     //get move piece
     var _move_ar = board[# move_x, move_y];
     var _move_team = _move_ar[info.team];
+    
     //defeat if enemy present
     if (_move_team==!turn) defeat_piece(move_x, move_y);
+    
     //move piece
     board_set_cell(board, move_x, move_y, turn, sel_type);
     board_set_cell(board, sel_x, sel_y, -1, type.empty);
+    
     //clear moveable grid after checking
     check[!turn] = false;
     moveable_check(moveable, move_x, move_y, board, sel_type);
     moveable_clear();
+    
     //change turn
     turn = !turn;
     mode = 0;
@@ -463,9 +467,11 @@ if (mouse_check_button_pressed(mb_left)){
         sel_x = cell_x;
         sel_y = cell_y;
         mode = 1;
+        
         //check moveables
         moveable_clear();
         moveable_check(moveable, sel_x, sel_y, board, sel_type);
+        
         //sound
         audio_play_sound(snd_choose, 10, false);
     }
@@ -474,10 +480,11 @@ if (mouse_check_button_pressed(mb_left)){
         //check for checks from the other side
         check[turn] = false;
         
-        //future board
+        //future board to know what is going to happen
         var future_board = ds_grid_create(board_w, board_h);
         ds_grid_copy(future_board, board);
         
+        //move the piece in that board
         board_set_cell(future_board, sel_x, sel_y, -1, type.empty);
         board_set_cell(future_board, cell_x, cell_y, turn, sel_type);
         
